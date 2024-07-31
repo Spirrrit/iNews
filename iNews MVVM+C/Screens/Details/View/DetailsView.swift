@@ -58,7 +58,7 @@ final class DetailsView: UIViewController {
     
 //MARK: - Setup Views
     private func setupViews(){
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         [titleNews, imageNews, dateNews, discriptionNews, browserButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false

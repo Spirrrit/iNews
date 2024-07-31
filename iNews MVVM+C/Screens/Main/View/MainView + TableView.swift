@@ -20,9 +20,9 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func reloadTableView(){
-        
         DispatchQueue.main.async {
             self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            
         }
     }
     
@@ -64,6 +64,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let cellViewModel = cellDataSource[indexPath.row]
+        
         viewModel?.goToDetailsScreen(item: cellViewModel)
     }
     

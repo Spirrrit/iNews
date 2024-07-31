@@ -16,6 +16,7 @@ class MainViewModel {
     var coreDataService: CoreDataService
     
     var cellDataSource: Observable<[MainCellViewModel]> = Observable(nil)
+    var countLoadNews: Observable<Int> = Observable(nil)
     var isLoading: Observable<Bool> = Observable(false)
     
     var dataSource = [NewCoreData]()
@@ -29,19 +30,20 @@ class MainViewModel {
 
     
     func loadNews() {
-        isLoading.value = false
-        networkService.fetchNews { [weak self] news, error in
-            guard self != nil else { return }
-            if let news {
-                news.forEach {
-                    CoreDataService.shared.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
-                }
-                
-                self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
-                self?.mapCellData()
-            }
-        }
+        isLoading.value = true
+        countLoadNews.value = 0
         
+            self.networkService.fetchNews { [weak self] news, error in
+                guard self != nil else { return }
+                if let news {
+                    news.forEach {
+                        CoreDataService.shared.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
+                    }
+                    self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
+                    self?.mapCellData()
+                    self?.countNews()
+                }
+            }
     }
 
     
@@ -54,6 +56,10 @@ class MainViewModel {
         coreDataService.removeAllItems()
         dataSource = coreDataService.fetchAllItems()
         mapCellData()
+    }
+    
+    func countNews(){
+        countLoadNews.value? += 1
     }
     
     func mapCellData(){

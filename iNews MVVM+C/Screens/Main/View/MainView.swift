@@ -22,17 +22,19 @@ class MainView: UIViewController {
         viewModel?.loadNews()
         viewModel?.getAllNews()
         bindViewModel()
-
+        
     }
 
     
     // Binding Model
     
-     private func bindViewModel(){
+    private func bindViewModel(){
+        
         viewModel?.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading else { return }
             DispatchQueue.main.async {
-                isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+                isLoading ? self.refreshControl.beginRefreshing() : self.refreshControl.endRefreshing()
+//                isLoading ? self.activityIndicator.startAnimating() :  self.activityIndicator.stopAnimating()
             }
         }
         
@@ -40,17 +42,27 @@ class MainView: UIViewController {
             guard let self, let news else { return }
             self.cellDataSource = news
             self.cellDataSource.sort(by: { $0.pubData > $1.pubData  })
-            reloadTableView()
         }
         
-        
+        viewModel?.countLoadNews.bind { [weak self] count in
+            guard let self, let count else { return }
+            if count == 1 {
+                self.reloadTableView()
+            }
+            if count == URLResources.newsSource.rssItem.count {
+                viewModel?.isLoading.value = false
+                self.reloadTableView()
+                refreshControl.endRefreshing()
+            }
+        }
     }
     
     func setupView(){
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         title = "Главная"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(remove))
         refreshControl.addTarget(self, action: #selector(endRefresh), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Загрузка...")
@@ -68,7 +80,7 @@ class MainView: UIViewController {
         NSLayoutConstraint.activate([
             
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
@@ -85,11 +97,8 @@ class MainView: UIViewController {
     }
     
     @objc func endRefresh(){
+            self.viewModel?.loadNews()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
-            
-            self.refreshControl.endRefreshing()
-        }
     }
 
 }

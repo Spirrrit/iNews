@@ -18,7 +18,7 @@ class CoreDataService {
             if let error = error {
                 fatalError("Unresolved error \(error)")
             } else {
-                print("DB url - ", description.url?.absoluteString ?? "I can't find the way to the database")
+//                print("DB url - ", description.url?.absoluteString ?? "I can't find the way to the database")
             }
         }
     }

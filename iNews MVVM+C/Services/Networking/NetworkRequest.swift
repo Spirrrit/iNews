@@ -24,17 +24,19 @@ final class NetworkRequest {
     private init() {}
     
     func getData(urls: URLResources,  complitionHandler: @escaping (Result<Data, NetworkError>, _ source: String) -> Void) {
-        for url in urls.news {
-            
-            URLSession.shared.request(url.key) { data, _, error in
-                if error != nil {
-                    complitionHandler(.failure(.urlError), url.value)
-                } else {
-                    guard let data else { return }
-                    complitionHandler(.success(data), url.value)
+            for url in urls.news {
+                URLSession.shared.request(url.key) { data, _, error in
+                    if error != nil {
+                        complitionHandler(.failure(.urlError), url.value)
+                    } else {
+                        guard let data else { return }
+                        complitionHandler(.success(data), url.value)
+                    }
                 }
             }
-        }
+        
+
+        
     }
     
 }
