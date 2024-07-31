@@ -21,7 +21,8 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
     
     func reloadTableView(){
         DispatchQueue.main.async {
-            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
+            
             
         }
     }

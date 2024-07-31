@@ -82,6 +82,8 @@ final class DetailsView: UIViewController {
         
         imageNews.layer.masksToBounds = true
         imageNews.layer.cornerRadius = 15
+        imageNews.contentMode = .scaleAspectFill
+        imageNews.clipsToBounds = true
         
         browserButton.addTarget(self, action: #selector(browserButtonTap), for: .touchUpInside)
         browserButton.setTitle("Перейти в браузер ", for: .normal)

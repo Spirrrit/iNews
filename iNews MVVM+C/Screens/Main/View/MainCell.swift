@@ -51,6 +51,10 @@ class MainCell: UITableViewCell {
         
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 10
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+            
+        
         
         date.font = .systemFont(ofSize: 14)
         date.textColor = .gray

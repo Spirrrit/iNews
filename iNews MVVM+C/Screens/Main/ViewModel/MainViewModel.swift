@@ -30,9 +30,13 @@ class MainViewModel {
 
     
     func loadNews() {
+        let queue = OperationQueue()
+        
         isLoading.value = true
         countLoadNews.value = 0
+        queue.cancelAllOperations()
         
+        let loadOperation = BlockOperation {
             self.networkService.fetchNews { [weak self] news, error in
                 guard self != nil else { return }
                 if let news {
@@ -44,12 +48,19 @@ class MainViewModel {
                     self?.countNews()
                 }
             }
+        }
+        queue.addOperation(loadOperation)
+        
     }
 
     
     func getAllNews(){
+        isLoading.value = true
         dataSource = coreDataService.fetchAllItems()
         mapCellData()
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 2){
+            self.isLoading.value = false
+        }
     }
     
     func deleteAllNews(){

@@ -14,15 +14,23 @@ class MainView: UIViewController {
     let activityIndicator = UIActivityIndicatorView()
     var cellDataSource = [MainCellViewModel]()
     var refreshControl: UIRefreshControl = UIRefreshControl()
+    var timer: Timer?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        startTimer()
         setupTableView()
         setupView()
         viewModel?.loadNews()
         viewModel?.getAllNews()
         bindViewModel()
-        
+    }
+
+    
+    func startTimer() {
+        // Создаем таймер, который будет срабатывать каждые 15 секунд
+        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
     }
 
     
@@ -49,10 +57,11 @@ class MainView: UIViewController {
             if count == 1 {
                 self.reloadTableView()
             }
+            
             if count == URLResources.newsSource.rssItem.count {
                 viewModel?.isLoading.value = false
                 self.reloadTableView()
-                refreshControl.endRefreshing()
+//                refreshControl.endRefreshing()
             }
         }
     }
@@ -64,7 +73,7 @@ class MainView: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(remove))
-        refreshControl.addTarget(self, action: #selector(endRefresh), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Загрузка...")
         
         view.addSubview(tableView)
@@ -96,9 +105,14 @@ class MainView: UIViewController {
         viewModel?.userDidPressClearCashes()
     }
     
-    @objc func endRefresh(){
-            self.viewModel?.loadNews()
-
+    @objc func refresh(){
+            self.viewModel?.getAllNews()
+        
+            
+    }
+    @objc func loadData(){
+        viewModel?.loadNews()
+        print("Обновлено")
     }
 
 }

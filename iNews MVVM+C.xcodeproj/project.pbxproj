@@ -36,6 +36,7 @@
 		9EBDF8992C4E8E0500872011 /* String + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDF8982C4E8E0500872011 /* String + Ext.swift */; };
 		9EBDF89B2C4E8E5600872011 /* Date + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDF89A2C4E8E5600872011 /* Date + Ext.swift */; };
 		9EBDF8A42C4E94F100872011 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDF8A32C4E94F100872011 /* Observable.swift */; };
+		9EE05FB72C5AB114003CB1BB /* UIImage + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE05FB62C5AB114003CB1BB /* UIImage + Ext.swift */; };
 		9EF9E5C82C58E01300DBADEA /* ModelCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EF9E5C62C58E01300DBADEA /* ModelCoreData.xcdatamodeld */; };
 		9EFD82A02C50BC4A00FC95F2 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFD829F2C50BC4A00FC95F2 /* CoreDataService.swift */; };
 		9EFD82A22C50DC7B00FC95F2 /* Data + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFD82A12C50DC7B00FC95F2 /* Data + Ext.swift */; };
@@ -92,6 +93,7 @@
 		9EBDF8982C4E8E0500872011 /* String + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Ext.swift"; sourceTree = "<group>"; };
 		9EBDF89A2C4E8E5600872011 /* Date + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Ext.swift"; sourceTree = "<group>"; };
 		9EBDF8A32C4E94F100872011 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		9EE05FB62C5AB114003CB1BB /* UIImage + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Ext.swift"; sourceTree = "<group>"; };
 		9EF9E5C72C58E01300DBADEA /* ModelCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelCoreData.xcdatamodel; sourceTree = "<group>"; };
 		9EFD829F2C50BC4A00FC95F2 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		9EFD82A12C50DC7B00FC95F2 /* Data + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data + Ext.swift"; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				9EBDF89A2C4E8E5600872011 /* Date + Ext.swift */,
 				9EFD82A12C50DC7B00FC95F2 /* Data + Ext.swift */,
 				9E7034A92C5A4BDB00A76EAC /* UIRefreshControl + Ext.swift */,
+				9EE05FB62C5AB114003CB1BB /* UIImage + Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				9EF9E5C82C58E01300DBADEA /* ModelCoreData.xcdatamodeld in Sources */,
 				9EBDF8992C4E8E0500872011 /* String + Ext.swift in Sources */,
 				9EBDF8922C4E5A8300872011 /* XMLParse.swift in Sources */,
+				9EE05FB72C5AB114003CB1BB /* UIImage + Ext.swift in Sources */,
 				9E7034AA2C5A4BDB00A76EAC /* UIRefreshControl + Ext.swift in Sources */,
 				9EBDF88D2C4E543E00872011 /* URLResources.swift in Sources */,
 				9EA6A76C2C4CE98B00041BF7 /* MainView.swift in Sources */,

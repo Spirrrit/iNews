@@ -32,8 +32,7 @@ class CoreDataService {
         let fetchRequest: NSFetchRequest<NewCoreData> = NewCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "rssLink == %@", link)
         
-        do {
-            let existingItems = try context.fetch(fetchRequest)
+        do {            let existingItems = try context.fetch(fetchRequest)
             if existingItems.isEmpty {
                 let newItem = NewCoreData(context: context)
                 newItem.rssTitle = title
