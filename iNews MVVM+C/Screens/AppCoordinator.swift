@@ -90,6 +90,7 @@ class AppCoordinator : Coordinator {
         let alert = UIAlertController(title: "Очистка кеша", message: "Действительно хотите очистить кэш?", preferredStyle: .alert)
         let okAtertAction = UIAlertAction(title: "Да", style: .destructive) { action in
             mainViewModel.deleteAllNews()
+
             let resultAlert = UIAlertController(title: "Очистка кеша", message: "Память успешно очищена", preferredStyle: .alert)
             let celcelresultAlert = UIAlertAction(title: "Закрыть", style: .cancel)
             resultAlert.addAction(celcelresultAlert)

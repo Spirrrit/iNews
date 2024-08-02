@@ -27,7 +27,7 @@ class MainViewModel {
         self.coreDataService = conteiner.coreDataService
     }
     
-
+    
     
     func loadNews() {
         let queue = OperationQueue()
@@ -81,6 +81,7 @@ class MainViewModel {
 //        deleteAllNews()
 //        getAllNews()
 //        mapCellData()
+//        
 //    }
     
     //MARK: - User action

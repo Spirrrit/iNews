@@ -12,11 +12,12 @@ class DetailsViewModel {
     
     weak var appCordinator : AppCoordinator?
     typealias Dependency =  CoreDataServiceProtocol
-    var coreDataService: CoreDataService
+    let coreDataService: CoreDataService
 
     init(conteiner: AppDependency) {
         self.coreDataService = conteiner.coreDataService
     }
+    
 
     func userDidPressGoToBrowser(link: String){
         appCordinator?.userDidPressGoToBrowser(link: link)

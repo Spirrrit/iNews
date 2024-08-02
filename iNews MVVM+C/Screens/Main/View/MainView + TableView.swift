@@ -51,7 +51,6 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         let cellViewModel = cellDataSource[indexPath.row]
         
         DispatchQueue.main.async {
-//            customCell.image.image = cellViewModel.image
             if let cell = tableView.cellForRow(at: indexPath) {
                 customCell.image.image = cellViewModel.image
                 cell.setNeedsLayout() //

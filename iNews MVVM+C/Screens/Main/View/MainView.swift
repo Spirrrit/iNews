@@ -23,14 +23,14 @@ class MainView: UIViewController {
         setupTableView()
         setupView()
         viewModel?.loadNews()
-        viewModel?.getAllNews()
+//        viewModel?.getAllNews()
         bindViewModel()
     }
 
     
     func startTimer() {
-        // Создаем таймер, который будет срабатывать каждые 15 секунд
-        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
+        // Создаем таймер, который будет срабатывать каждые 60 секунд
+        timer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
     }
 
     
@@ -54,9 +54,9 @@ class MainView: UIViewController {
         
         viewModel?.countLoadNews.bind { [weak self] count in
             guard let self, let count else { return }
-            if count == 1 {
-                self.reloadTableView()
-            }
+//            if count == 1 {
+//                self.reloadTableView()
+//            }
             
             if count == URLResources.newsSource.rssItem.count {
                 viewModel?.isLoading.value = false
@@ -103,16 +103,17 @@ class MainView: UIViewController {
     
     @objc func remove(){
         viewModel?.userDidPressClearCashes()
+        
     }
     
     @objc func refresh(){
-            self.viewModel?.getAllNews()
+            self.viewModel?.loadNews()
         
             
     }
     @objc func loadData(){
         viewModel?.loadNews()
-        print("Обновлено")
+        print("Обновлено с таймером")
     }
 
 }
