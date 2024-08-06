@@ -46,6 +46,8 @@ class MainViewModel {
                     self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
                     self?.mapCellData()
                     self?.countNews()
+                } else {
+                    self?.getAllNews()
                 }
             }
         }

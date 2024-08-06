@@ -29,8 +29,8 @@ class MainView: UIViewController {
 
     
     func startTimer() {
-        // Создаем таймер, который будет срабатывать каждые 60 секунд
-        timer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
+        // Создаем таймер, который будет срабатывать каждые 15 секунд
+        timer = Timer.scheduledTimer(timeInterval: 15.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
     }
 
     
@@ -41,27 +41,33 @@ class MainView: UIViewController {
         viewModel?.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading else { return }
             DispatchQueue.main.async {
-                isLoading ? self.refreshControl.beginRefreshing() : self.refreshControl.endRefreshing()
+                isLoading ? self.refreshControl.beginRefreshingManually() : self.refreshControl.endRefreshing()
 //                isLoading ? self.activityIndicator.startAnimating() :  self.activityIndicator.stopAnimating()
             }
         }
         
         viewModel?.cellDataSource.bind { [weak self] news in
             guard let self, let news else { return }
+            
+            if cellDataSource.count < news.count, viewModel?.isLoading.value == false {
+                print("Новый элемент")
+                reloadTableView()
+            }
+            
             self.cellDataSource = news
             self.cellDataSource.sort(by: { $0.pubData > $1.pubData  })
+            
         }
         
         viewModel?.countLoadNews.bind { [weak self] count in
             guard let self, let count else { return }
-//            if count == 1 {
-//                self.reloadTableView()
-//            }
+            if count == 1 {
+                self.reloadTableView()
+            }
             
             if count == URLResources.newsSource.rssItem.count {
                 viewModel?.isLoading.value = false
                 self.reloadTableView()
-//                refreshControl.endRefreshing()
             }
         }
     }
@@ -107,9 +113,13 @@ class MainView: UIViewController {
     }
     
     @objc func refresh(){
-            self.viewModel?.loadNews()
+        reloadTableView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+            self.refreshControl.endRefreshing()
+        }
         
-            
+        
+        
     }
     @objc func loadData(){
         viewModel?.loadNews()
