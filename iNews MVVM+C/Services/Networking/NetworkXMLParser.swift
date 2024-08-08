@@ -98,6 +98,7 @@ extension NetworkXMLParser: XMLParserDelegate {
             
             let newsItem = New(title: currentTitle, description: currentDescription, pubData: currentpubDate.getDate() ?? Date() , image: currentImageLink, source: currentResource, link: currentLink)
             self.newsItems.append(newsItem)
+            
 //            self.newsItems.sort(by: { $0.pubData > $1.pubData  })
             
         }

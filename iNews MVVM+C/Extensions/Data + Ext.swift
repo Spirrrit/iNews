@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 extension Data? {
-    func getImageFromData() -> UIImage? {
+    func getImageFromData() -> UIImage? { 
         guard let data = self else { return nil }
         return UIImage(data: data)
     }

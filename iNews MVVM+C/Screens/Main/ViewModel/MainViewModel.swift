@@ -10,7 +10,7 @@ import Foundation
 class MainViewModel {
     weak var appCordinator : AppCoordinator?
     
-    typealias Dependency = NetworkServicesProtocol & CoreDataServiceProtocol
+    typealias Dependency = NetworkServicesProtocol 
 
     var networkService: NetworkService
     var coreDataService: CoreDataService
@@ -40,9 +40,11 @@ class MainViewModel {
             self.networkService.fetchNews { [weak self] news, error in
                 guard self != nil else { return }
                 if let news {
-                    news.forEach {
-                        CoreDataService.shared.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
-                    }
+
+                        news.forEach {
+                            self?.coreDataService.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
+                            
+                        }
                     self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
                     self?.mapCellData()
                     self?.countNews()

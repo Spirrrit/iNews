@@ -29,8 +29,8 @@ class MainView: UIViewController {
 
     
     func startTimer() {
-        // Создаем таймер, который будет срабатывать каждые 15 секунд
-        timer = Timer.scheduledTimer(timeInterval: 15.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
+        // Создаем таймер, который будет срабатывать каждые 30 секунд
+        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
     }
 
     
@@ -41,19 +41,18 @@ class MainView: UIViewController {
         viewModel?.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading else { return }
             DispatchQueue.main.async {
-                isLoading ? self.refreshControl.beginRefreshingManually() : self.refreshControl.endRefreshing()
-//                isLoading ? self.activityIndicator.startAnimating() :  self.activityIndicator.stopAnimating()
+                isLoading ? self.refreshControl.beginRefreshing() : self.refreshControl.endRefreshing()
             }
         }
         
         viewModel?.cellDataSource.bind { [weak self] news in
             guard let self, let news else { return }
             
-            if cellDataSource.count < news.count, viewModel?.isLoading.value == false {
-                print("Новый элемент")
-                reloadTableView()
-            }
-            
+//            if cellDataSource.count < news.count && viewModel?.isLoading.value == false {
+//                print("Новый элемент")
+//                reloadTableViewBasic()
+//            }
+           
             self.cellDataSource = news
             self.cellDataSource.sort(by: { $0.pubData > $1.pubData  })
             
@@ -61,13 +60,13 @@ class MainView: UIViewController {
         
         viewModel?.countLoadNews.bind { [weak self] count in
             guard let self, let count else { return }
-            if count == 1 {
-                self.reloadTableView()
-            }
+//            if count == 1 {
+//                reloadTableViewBasic()
+//            }
             
-            if count == URLResources.newsSource.rssItem.count {
+            if count == URLResources.newsSource.rssItem.count && viewModel?.isLoading.value == true {
                 viewModel?.isLoading.value = false
-                self.reloadTableView()
+                    reloadTableViewBasic()
             }
         }
     }
@@ -77,16 +76,15 @@ class MainView: UIViewController {
         
         title = "Главная"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(remove))
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Загрузка...")
         
         view.addSubview(tableView)
-        view.addSubview(activityIndicator)
+//        view.addSubview(activityIndicator)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+//        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         
         
@@ -98,9 +96,9 @@ class MainView: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            
+//            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             
             
@@ -113,9 +111,10 @@ class MainView: UIViewController {
     }
     
     @objc func refresh(){
-        reloadTableView()
+        self.tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2){
             self.refreshControl.endRefreshing()
+            
         }
         
         

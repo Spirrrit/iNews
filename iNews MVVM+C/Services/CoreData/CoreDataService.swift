@@ -9,7 +9,7 @@ import CoreData
 import UIKit
 
 class CoreDataService {
-    static let shared = CoreDataService()
+//    static let shared = CoreDataService()
     private let persistentContainer: NSPersistentContainer
     
      init() {
@@ -22,6 +22,17 @@ class CoreDataService {
             }
         }
     }
+//    lazy var persistentContainer: NSPersistentContainer = {
+//        let container = NSPersistentContainer(name: "ModelCoreData")
+//        container.loadPersistentStores { discription, error in
+//            if let error {
+//                print(error.localizedDescription)
+//            } else {
+//                print("DB url - ", discription.url?.absoluteString ?? "")
+//            }
+//        }
+//        return container
+//    }()
 
     //MARK: - CREATE
     
@@ -32,7 +43,8 @@ class CoreDataService {
         let fetchRequest: NSFetchRequest<NewCoreData> = NewCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "rssLink == %@", link)
         
-        do {            let existingItems = try context.fetch(fetchRequest)
+        do {            
+            let existingItems = try context.fetch(fetchRequest)
             if existingItems.isEmpty {
                 let newItem = NewCoreData(context: context)
                 newItem.rssTitle = title
@@ -41,8 +53,7 @@ class CoreDataService {
                 newItem.rssSource = source
                 newItem.rssLink = link
                 
-                // Download and save image
-                
+//                 Download and save image
                 if let imageData = downloadImage(from: imageUrl) {
                     newItem.rssImage = imageData
                 }
@@ -50,7 +61,7 @@ class CoreDataService {
 //                newItem.rssImage = Data()
                 
                 
-                try context.save()
+                 try context.save()
 //                print("Item saved successfully!")
                 
             } else {
@@ -59,7 +70,7 @@ class CoreDataService {
         } catch {
             print("Failed to fetch or save item: \(error)")
         }
-        
+//        
         func downloadImage(from urlString: String) -> Data? {
             guard let url = URL(string: urlString), let data = try? Data(contentsOf: url) else { return nil }
             return data

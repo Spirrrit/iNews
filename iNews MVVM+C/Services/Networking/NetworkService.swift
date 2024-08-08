@@ -15,15 +15,15 @@ final class NetworkService {
         self.xmlParser = xmlParser
     }
     
-    func fetchNews(completionHandler: @escaping (([New]?, NetworkError?) -> Void)){
+    func fetchNews(completionHandler: @escaping (([New]?, NetworkError?) -> Void)) {
         xmlParser.parserCompletionHandler = completionHandler
         
-        NetworkRequest.shared.getData(urls: URLResources.newsSource) { result, source   in
+        NetworkRequest.shared.getData(urls: URLResources.newsSource) { [weak self] result, source   in
             switch result {
             case .success(let data):
                 let parser = XMLParser(data: data)
-                parser.delegate = self.xmlParser
-                self.xmlParser.currentResource = source
+                parser.delegate = self?.xmlParser
+                self?.xmlParser.currentResource = source
                 parser.parse()
             case .failure(_):
                 completionHandler(nil, .canNotParse)

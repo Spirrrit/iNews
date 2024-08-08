@@ -18,14 +18,41 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         
         self.tableView.register(MainCell.self, forCellReuseIdentifier: MainCell.identifier)
     }
-    
-    func reloadTableView(){
+    func reloadTableViewBasic(){
         DispatchQueue.main.async {
             self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
-            
-            
         }
     }
+    
+    func reloadTableView(newItem: [MainCellViewModel], oldItem: [MainCellViewModel]){
+
+        var resultIndexPath: [IndexPath] = []
+        let delta = abs(newItem.count - oldItem.count)
+        let indexPath = (0..<delta).map { IndexPath(row: $0, section: 0) }
+        
+        if newItem.count >= oldItem.count {
+            tableView.insertRows(at: indexPath, with: .fade)
+            resultIndexPath = makeUpdateIndexes(bigger: newItem, lower: oldItem)
+        } else {
+            tableView.deleteRows(at: indexPath, with: .fade)
+            resultIndexPath = makeUpdateIndexes(bigger: oldItem, lower: newItem)
+        }
+        DispatchQueue.main.async {
+            self.tableView.reloadRows(at: resultIndexPath, with: .fade)
+            print("Обновлено")
+        }
+        
+        
+    }
+    
+    func makeUpdateIndexes(bigger: [MainCellViewModel], lower: [MainCellViewModel]) -> [IndexPath] {
+        let indexPath = bigger.indices.map { IndexPath(row: $0, section: 0) }
+        return indexPath.filter { index in
+            guard index.row < lower.count else { return false }
+            return bigger[index.row] !== lower[index.row]
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cellDataSource.count
@@ -38,7 +65,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         let cellViewModel = cellDataSource[indexPath.row]
         cell.title.text = cellViewModel.title
         cell.discription.text = cellViewModel.description
-        cell.image.image = UIImage(named: "emptyPhoto")
+        cell.image.image = nil
         cell.date.text = cellViewModel.pubData.toRusString
         cell.source.text = cellViewModel.source
         return cell
@@ -52,13 +79,10 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         
         DispatchQueue.main.async {
             if let cell = tableView.cellForRow(at: indexPath) {
-                customCell.image.image = cellViewModel.image
-                cell.setNeedsLayout() //
+                    customCell.image.image = cellViewModel.image
+                    cell.setNeedsLayout()
             }
         }
-        
-
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

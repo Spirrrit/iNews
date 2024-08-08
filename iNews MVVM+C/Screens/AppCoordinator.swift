@@ -34,7 +34,9 @@ class AppCoordinator : Coordinator {
         mainView.viewModel = mainViewModel
         mainViewModel.appCordinator = self
         mainViewModel.networkService = NetworkService(xmlParser: NetworkXMLParser())
+        
         navigationController.pushViewController(mainView, animated: true)
+        
     }
     
     //MARK: - Go to details screen
