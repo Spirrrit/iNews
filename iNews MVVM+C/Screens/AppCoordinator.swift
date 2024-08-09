@@ -27,10 +27,11 @@ class AppCoordinator : Coordinator {
     }
     
     //MARK: - Go to main screen
+    
     func goToMainScreen() {
         
         let mainView = MainView()
-        let mainViewModel = MainViewModel(conteiner: AppDependency(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
+        let mainViewModel = MainViewModel(conteiner: Services(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
         mainView.viewModel = mainViewModel
         mainViewModel.appCordinator = self
         mainViewModel.networkService = NetworkService(xmlParser: NetworkXMLParser())
@@ -40,13 +41,15 @@ class AppCoordinator : Coordinator {
     }
     
     //MARK: - Go to details screen
+    
     func goToDetailsScreen(item: MainCellViewModel) {
         
-        let detailViewModel = DetailsViewModel(conteiner: AppDependency(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
+        let detailViewModel = DetailsViewModel(conteiner: Services(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
         let detailView = DetailsView(detailViewModel: detailViewModel, dataSource: DetailsModel(news: item))
         detailViewModel.appCordinator = self
         navigationController.pushViewController(detailView, animated: true)
     }
+    
     //MARK: - User did press button "Go to browser"
     
     func userDidPressGoToBrowser(link: String) {
@@ -58,6 +61,7 @@ class AppCoordinator : Coordinator {
     }
     
     //MARK: - User did press button "Share"
+    
     func userDidPressShare(link: String) {
         let urladdress = link
         let items: [String] = [urladdress]
@@ -67,14 +71,13 @@ class AppCoordinator : Coordinator {
     
     
     //MARK: - User did press button "Clear cashes"
+    
     func userDidPressClearCashes() {
-        // Пользователь нажал кнопку "Очистить кэш"
         
         let mainView = MainView()
-        let mainViewModel = MainViewModel(conteiner: AppDependency(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
+        let mainViewModel = MainViewModel(conteiner: Services(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
         mainView.viewModel = mainViewModel
         mainViewModel.appCordinator = self
-        
         
         showClearCashesAlert()
     }
@@ -82,10 +85,9 @@ class AppCoordinator : Coordinator {
     //MARK: - Show clear cashes alert
     
     func showClearCashesAlert(){
-        // Показать алерт очистки кэша
         
         let mainView = MainView()
-        let mainViewModel = MainViewModel(conteiner: AppDependency(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
+        let mainViewModel = MainViewModel(conteiner: Services(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
         mainView.viewModel = mainViewModel
         mainViewModel.appCordinator = self
         
@@ -108,9 +110,9 @@ class AppCoordinator : Coordinator {
 
     }
     
-    //MARK: - Show  activity indicatorview
+    //MARK: - Show internet connection alert
     
-    func showCctivityIndicatorview(){
-        // Показать индикатор загрузки
+    func showInternetConnectionAlert(){
+        
     }
 }

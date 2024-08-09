@@ -80,6 +80,7 @@ extension NetworkXMLParser: XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
+        
         switch currentElement {
         case "title": currentTitle += string
         case "description": currentDescription += string
@@ -93,14 +94,10 @@ extension NetworkXMLParser: XMLParserDelegate {
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
-        //
         if elementName == "item" {
             
             let newsItem = New(title: currentTitle, description: currentDescription, pubData: currentpubDate.getDate() ?? Date() , image: currentImageLink, source: currentResource, link: currentLink)
             self.newsItems.append(newsItem)
-            
-//            self.newsItems.sort(by: { $0.pubData > $1.pubData  })
-            
         }
     }
     

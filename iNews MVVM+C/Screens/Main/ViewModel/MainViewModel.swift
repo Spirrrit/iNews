@@ -22,7 +22,7 @@ class MainViewModel {
     var dataSource = [NewCoreData]()
 
 
-    init(conteiner: AppDependency) {
+    init(conteiner: Services) {
         self.networkService = conteiner.networkService
         self.coreDataService = conteiner.coreDataService
     }
@@ -30,41 +30,60 @@ class MainViewModel {
     
     
     func loadNews() {
-        let queue = OperationQueue()
         
         isLoading.value = true
         countLoadNews.value = 0
-        queue.cancelAllOperations()
+        dataSource = coreDataService.fetchAllItems()
         
-        let loadOperation = BlockOperation {
-            self.networkService.fetchNews { [weak self] news, error in
-                guard self != nil else { return }
-                if let news {
-
-                        news.forEach {
-                            self?.coreDataService.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
-                            
-                        }
+        self.networkService.fetchNews { [weak self] news, error in
+            guard self != nil else { return }
+            if let news {
+                
+                news.forEach {
+                    self?.coreDataService.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
+                }
+                
+                self?.countNews()
+                
+                if self?.countLoadNews.value == 1 {
                     self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
                     self?.mapCellData()
-                    self?.countNews()
-                } else {
-                    self?.getAllNews()
                 }
+                
+                if self?.countLoadNews.value == 5 {
+                    self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
+                    self?.mapCellData()
+                    self?.isLoading.value = false
+                }
+                
             }
         }
-        queue.addOperation(loadOperation)
+        
         
     }
-
     
-    func getAllNews(){
-        isLoading.value = true
-        dataSource = coreDataService.fetchAllItems()
-        mapCellData()
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 2){
-            self.isLoading.value = false
+    func updateNews(){
+        
+        countLoadNews.value = 0
+        
+        self.networkService.fetchNews { [weak self] news, error in
+            guard self != nil else { return }
+            if let news {
+
+                    news.forEach {
+                        self?.coreDataService.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
+                        
+                    }
+                self?.countNews()
+    
+                if self?.countLoadNews.value == 5 {
+                    self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
+                    self?.mapCellData()
+                }
+                
+            }
         }
+        
     }
     
     func deleteAllNews(){
@@ -81,14 +100,8 @@ class MainViewModel {
         cellDataSource.value = dataSource.compactMap({ MainCellViewModel($0) })
     }
     
-//    func clearCashes(){
-//        deleteAllNews()
-//        getAllNews()
-//        mapCellData()
-//        
-//    }
-    
     //MARK: - User action
+    
     func userDidPressClearCashes(){
         appCordinator?.userDidPressClearCashes()
     }

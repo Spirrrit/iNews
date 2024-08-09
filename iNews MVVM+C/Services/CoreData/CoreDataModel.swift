@@ -1,5 +1,5 @@
 //
-//  NewCoreData+CoreDataProperties.swift
+//  CoreDataModel.swift
 //  iNews MVVM+C
 //
 //  Created by Слава on 23.07.2024.

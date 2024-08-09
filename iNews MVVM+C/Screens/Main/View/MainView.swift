@@ -23,21 +23,22 @@ class MainView: UIViewController {
         setupTableView()
         setupView()
         viewModel?.loadNews()
-//        viewModel?.getAllNews()
         bindViewModel()
     }
 
+    //MARK: - Timer
     
+    //Timer that asks for updates on the network every 30 seconds
     func startTimer() {
-        // Создаем таймер, который будет срабатывать каждые 30 секунд
-        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(loadData), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(updateNews), userInfo: nil, repeats: true)
     }
 
     
-    // Binding Model
+    //MARK: - Binding
     
     private func bindViewModel(){
         
+        // следим за состояние лоадинг и вкл/вкл рефрешь контрол
         viewModel?.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading else { return }
             DispatchQueue.main.async {
@@ -48,28 +49,23 @@ class MainView: UIViewController {
         viewModel?.cellDataSource.bind { [weak self] news in
             guard let self, let news else { return }
             
-//            if cellDataSource.count < news.count && viewModel?.isLoading.value == false {
-//                print("Новый элемент")
-//                reloadTableViewBasic()
-//            }
+            // Если появились новые элементы и лоадер не крутится, то обновляем таблицу
+            if cellDataSource.count < news.count && viewModel?.isLoading.value == false {
+                print("Новый элемент")
+                reloadTableViewBasic()
+            }
            
             self.cellDataSource = news
             self.cellDataSource.sort(by: { $0.pubData > $1.pubData  })
             
-        }
-        
-        viewModel?.countLoadNews.bind { [weak self] count in
-            guard let self, let count else { return }
-//            if count == 1 {
-//                reloadTableViewBasic()
-//            }
-            
-            if count == URLResources.newsSource.rssItem.count && viewModel?.isLoading.value == true {
-                viewModel?.isLoading.value = false
-                    reloadTableViewBasic()
+            // обновляем таблицу пока лоаддер активен
+            if viewModel?.isLoading.value == true {
+                reloadTableViewBasic()
             }
         }
     }
+    
+    //MARK: - Setup View
     
     func setupView(){
         view.backgroundColor = .systemBackground
@@ -81,49 +77,39 @@ class MainView: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Загрузка...")
         
         view.addSubview(tableView)
-//        view.addSubview(activityIndicator)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-//        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         
-        
-        
-
         NSLayoutConstraint.activate([
             
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            
-//            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            
-            
         ])
     }
     
+    //MARK: - @Objc funcs
+    
     @objc func remove(){
-        viewModel?.userDidPressClearCashes()
         
+        viewModel?.userDidPressClearCashes()
     }
     
     @objc func refresh(){
+        
         self.tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2){
             self.refreshControl.endRefreshing()
-            
         }
-        
-        
-        
     }
-    @objc func loadData(){
-        viewModel?.loadNews()
+    
+    @objc func updateNews(){
+        
+        viewModel?.updateNews()
         print("Обновлено с таймером")
+        
     }
-
 }
 

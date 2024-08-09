@@ -39,7 +39,7 @@ final class DetailsView: UIViewController {
         setConstraints()
         displayNewInfo()
     }
-    
+//MARKK: - Display info
     func displayNewInfo() {
         titleNews.text = dataSource?.title
         discriptionNews.text = dataSource?.description
@@ -49,6 +49,7 @@ final class DetailsView: UIViewController {
     }
     
 //MARK: - @objc
+    
     @objc func browserButtonTap() {
         detailViewModel?.userDidPressGoToBrowser(link: storeUrlForBrowser ?? "")
     }
@@ -57,6 +58,7 @@ final class DetailsView: UIViewController {
     }
     
 //MARK: - Setup Views
+    
     private func setupViews(){
         view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
@@ -101,8 +103,6 @@ final class DetailsView: UIViewController {
 extension DetailsView {
     private func setConstraints(){
 
-        
-        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -118,9 +118,9 @@ extension DetailsView {
             imageNews.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             imageNews.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             imageNews.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-//            imageNews.heightAnchor.constraint(equalToConstant: 250),
+            imageNews.heightAnchor.constraint(equalToConstant: 250),
             
-//            dateNews.topAnchor.constraint(equalTo: imageNews.bottomAnchor, constant: 20),
+            dateNews.topAnchor.constraint(equalTo: imageNews.bottomAnchor, constant: 20),
             dateNews.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             dateNews.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             dateNews.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
@@ -138,12 +138,5 @@ extension DetailsView {
             browserButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
-        if imageNews.image == UIImage(named: "emptyPhoto") {
-            imageNews.heightAnchor.constraint(equalToConstant: 0).isActive = true
-            dateNews.topAnchor.constraint(equalTo: titleNews.bottomAnchor, constant: 20).isActive = true
-        } else {
-            imageNews.heightAnchor.constraint(equalToConstant: 250).isActive = true
-            dateNews.topAnchor.constraint(equalTo: imageNews.bottomAnchor, constant: 20).isActive = true
-        }
     }
 }

@@ -23,33 +23,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         return true
     }
-
-//    // MARK: - Core Data stack
-//    lazy var persistentContainer: NSPersistentContainer = {
-//        let container = NSPersistentContainer(name: "ModelCoreData")
-//        container.loadPersistentStores { discription, error in
-//            if let error {
-//                print(error.localizedDescription)
-//            } else {
-//                print("DB url - ", discription.url?.absoluteString)
-//            }
-//        }
-//        return container
-//    }()
-//
-//    // MARK: - Core Data Saving support
-//    func saveContext () {
-//        let context = persistentContainer.viewContext
-//        if context.hasChanges {
-//            do {
-//                try context.save()
-//            } catch {
-//                let nserror = error as NSError
-//                fatalError("Unre solved error \(nserror), \(nserror.userInfo)")
-//            }
-//        }
-//    }
-
-
 }
 
