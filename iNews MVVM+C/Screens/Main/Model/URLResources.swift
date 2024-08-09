@@ -13,7 +13,7 @@ struct URLResources {
     enum NewsResours: String {
         case rbk = "РБК"
         case rambler = "Рамблер"
-        case mk = "Московский комсомолец"
+        case mk = "МK"
         case komersant = "Комерсант"
         case ria = "Риа Новости"
     }

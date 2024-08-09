@@ -68,6 +68,7 @@ final class DetailsView: UIViewController {
         }
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self , action: #selector(shareButton))
+        navigationController?.navigationBar.tintColor = .darkGray
         
         titleNews.font = .boldSystemFont(ofSize: 24)
         titleNews.numberOfLines = 0
@@ -76,6 +77,7 @@ final class DetailsView: UIViewController {
         discriptionNews.font = UIFont.systemFont(ofSize: 20)
         discriptionNews.numberOfLines = 0
         discriptionNews.text  = ""
+        discriptionNews.textColor = .darkGray
         
         dateNews.font = UIFont.systemFont(ofSize: 20)
         dateNews.textColor = .lightGray
@@ -83,17 +85,17 @@ final class DetailsView: UIViewController {
         dateNews.text  = ""
         
         imageNews.layer.masksToBounds = true
-        imageNews.layer.cornerRadius = 15
+        imageNews.layer.cornerRadius = 12
         imageNews.contentMode = .scaleAspectFill
         imageNews.clipsToBounds = true
         
         browserButton.addTarget(self, action: #selector(browserButtonTap), for: .touchUpInside)
         browserButton.setTitle("Перейти в браузер ", for: .normal)
-        browserButton.setTitleColor(.black, for: .normal)
-        browserButton.backgroundColor = .white
-        browserButton.layer.cornerRadius = 15
-        browserButton.layer.borderWidth = 2
-        browserButton.layer.borderColor = UIColor.black.cgColor
+        browserButton.setTitleColor(.darkGray, for: .normal)
+        browserButton.backgroundColor = .systemBackground
+        browserButton.layer.cornerRadius = 12
+        browserButton.layer.borderWidth = 1.5
+        browserButton.layer.borderColor = UIColor.darkGray.cgColor
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
@@ -118,7 +120,7 @@ extension DetailsView {
             imageNews.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             imageNews.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             imageNews.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            imageNews.heightAnchor.constraint(equalToConstant: 250),
+//            imageNews.heightAnchor.constraint(equalToConstant: 250),
             
             dateNews.topAnchor.constraint(equalTo: imageNews.bottomAnchor, constant: 20),
             dateNews.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -137,6 +139,12 @@ extension DetailsView {
             browserButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             browserButton.heightAnchor.constraint(equalToConstant: 50),
         ])
+        
+        if dataSource?.image == UIImage(named: "emptyPhoto") {
+            imageNews.heightAnchor.constraint(equalToConstant: 0).isActive = true
+        } else {
+            imageNews.heightAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        }
         
     }
 }

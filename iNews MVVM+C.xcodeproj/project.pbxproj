@@ -27,6 +27,7 @@
 		9EA6A7FF2C4D2B4800041BF7 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6A7FE2C4D2B4800041BF7 /* Services.swift */; };
 		9EA6A8012C4D44BC00041BF7 /* NetworkXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6A8002C4D44BC00041BF7 /* NetworkXMLParser.swift */; };
 		9EA8078D2C666BD20063821F /* Date + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA8078C2C666BD20063821F /* Date + Ext.swift */; };
+		9EA8078F2C6679D20063821F /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA8078E2C6679D20063821F /* NetworkConnection.swift */; };
 		9EB692D82C63BB1C005F9853 /* ModelCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EB692D62C63BB1C005F9853 /* ModelCoreData.xcdatamodeld */; };
 		9EBDF8852C4E314700872011 /* MainView + TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDF8842C4E314700872011 /* MainView + TableView.swift */; };
 		9EBDF88D2C4E543E00872011 /* URLResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDF88C2C4E543E00872011 /* URLResources.swift */; };
@@ -82,6 +83,7 @@
 		9EA6A7FE2C4D2B4800041BF7 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		9EA6A8002C4D44BC00041BF7 /* NetworkXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkXMLParser.swift; sourceTree = "<group>"; };
 		9EA8078C2C666BD20063821F /* Date + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Ext.swift"; sourceTree = "<group>"; };
+		9EA8078E2C6679D20063821F /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
 		9EB692D72C63BB1C005F9853 /* ModelCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelCoreData.xcdatamodel; sourceTree = "<group>"; };
 		9EBDF8842C4E314700872011 /* MainView + TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView + TableView.swift"; sourceTree = "<group>"; };
 		9EBDF88C2C4E543E00872011 /* URLResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResources.swift; sourceTree = "<group>"; };
@@ -222,11 +224,11 @@
 		9EA6A7E82C4D0BA800041BF7 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				9EBDF88C2C4E543E00872011 /* URLResources.swift */,
 				9EA6A7F92C4D2ADD00041BF7 /* NetworkError.swift */,
 				9EA6A7F52C4D2A4D00041BF7 /* NetworkRequest.swift */,
 				9EA6A8002C4D44BC00041BF7 /* NetworkXMLParser.swift */,
 				9EA6A7FB2C4D2AF900041BF7 /* NetworkService.swift */,
+				9EA8078E2C6679D20063821F /* NetworkConnection.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				9EA6A7EB2C4D0C3600041BF7 /* MainModel.swift */,
+				9EBDF88C2C4E543E00872011 /* URLResources.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				9EA6A7F02C4D0C7700041BF7 /* DetailsView.swift in Sources */,
 				9EBDF8A42C4E94F100872011 /* Observable.swift in Sources */,
 				9EFD82A02C50BC4A00FC95F2 /* CoreDataService.swift in Sources */,
+				9EA8078F2C6679D20063821F /* NetworkConnection.swift in Sources */,
 				9EBDF8942C4E8D2300872011 /* MainCell.swift in Sources */,
 				9E12C4FD2C4F86200031CCCC /* CoreDataModel.swift in Sources */,
 				9EA6A7FC2C4D2AF900041BF7 /* NetworkService.swift in Sources */,

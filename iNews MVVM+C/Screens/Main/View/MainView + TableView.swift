@@ -58,16 +58,13 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         cellDataSource.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        150
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainCell.identifier, for: indexPath) as? MainCell else { return UITableViewCell() }
-
-        let cellViewModel = cellDataSource[indexPath.row]
-        cell.title.text = cellViewModel.title
-        cell.discription.text = cellViewModel.description
-        cell.image.image = nil
-        cell.date.text = cellViewModel.pubData.toRusString
-        cell.source.text = cellViewModel.source
         return cell
         
     }
@@ -76,6 +73,12 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         
         guard let customCell = cell as? MainCell else { return }
         let cellViewModel = cellDataSource[indexPath.row]
+        
+        customCell.title.text = cellViewModel.title
+        customCell.discription.text = cellViewModel.description
+        customCell.date.text = cellViewModel.pubData.toRusString
+        customCell.source.text = cellViewModel.source
+        
         
         DispatchQueue.main.async {
             if let cell = tableView.cellForRow(at: indexPath) {

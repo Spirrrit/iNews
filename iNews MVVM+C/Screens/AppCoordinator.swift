@@ -79,20 +79,9 @@ class AppCoordinator : Coordinator {
         mainView.viewModel = mainViewModel
         mainViewModel.appCordinator = self
         
-        showClearCashesAlert()
-    }
-    
-    //MARK: - Show clear cashes alert
-    
-    func showClearCashesAlert(){
-        
-        let mainView = MainView()
-        let mainViewModel = MainViewModel(conteiner: Services(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
-        mainView.viewModel = mainViewModel
-        mainViewModel.appCordinator = self
-        
         let alert = UIAlertController(title: "Очистка кеша", message: "Действительно хотите очистить кэш?", preferredStyle: .alert)
         let okAtertAction = UIAlertAction(title: "Да", style: .destructive) { action in
+            
             mainViewModel.deleteAllNews()
 
             let resultAlert = UIAlertController(title: "Очистка кеша", message: "Память успешно очищена", preferredStyle: .alert)
@@ -106,13 +95,49 @@ class AppCoordinator : Coordinator {
         alert.addAction(celcelAtertAction)
         
         navigationController.present(alert, animated: true)
-        
-
     }
+    
+    //MARK: - Show clear cashes alert
+    
+//    func showClearCashesAlert(){
+//        
+//        let mainView = MainView()
+//        let mainViewModel = MainViewModel(conteiner: Services(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
+//        mainView.viewModel = mainViewModel
+//        mainViewModel.appCordinator = self
+//        
+//        let alert = UIAlertController(title: "Очистка кеша", message: "Действительно хотите очистить кэш?", preferredStyle: .alert)
+//        let okAtertAction = UIAlertAction(title: "Да", style: .destructive) { action in
+//            
+//            mainViewModel.deleteAllNews()
+//
+//            let resultAlert = UIAlertController(title: "Очистка кеша", message: "Память успешно очищена", preferredStyle: .alert)
+//            let celcelresultAlert = UIAlertAction(title: "Закрыть", style: .cancel)
+//            resultAlert.addAction(celcelresultAlert)
+//            
+//            self.navigationController.present(resultAlert, animated: true)
+//        }
+//        let celcelAtertAction = UIAlertAction(title: "Нет", style: .cancel)
+//        alert.addAction(okAtertAction)
+//        alert.addAction(celcelAtertAction)
+//        
+//        navigationController.present(alert, animated: true)
+//        
+//
+//    }
     
     //MARK: - Show internet connection alert
     
     func showInternetConnectionAlert(){
+        let mainView = MainView()
+        let mainViewModel = MainViewModel(conteiner: Services(networkService: NetworkService(xmlParser: NetworkXMLParser()), coreDataService: CoreDataService()))
+        mainView.viewModel = mainViewModel
+        mainViewModel.appCordinator = self
         
+        let alert = UIAlertController(title: "Что то пошло не так. Проверьте интернет соединение", message: "", preferredStyle: .alert)
+        let celcelAtertAction = UIAlertAction(title: "Закрыть", style: .cancel)
+        alert.addAction(celcelAtertAction)
+        
+        navigationController.present(alert, animated: true)
     }
 }

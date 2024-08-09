@@ -29,7 +29,7 @@ class MainViewModel {
     
     
     
-    func loadNews() {
+    func loading() {
         
         isLoading.value = true
         countLoadNews.value = 0
@@ -50,7 +50,7 @@ class MainViewModel {
                     self?.mapCellData()
                 }
                 
-                if self?.countLoadNews.value == 5 {
+                if self?.countLoadNews.value == URLResources.newsSource.rssItem.count {
                     self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
                     self?.mapCellData()
                     self?.isLoading.value = false
@@ -62,7 +62,7 @@ class MainViewModel {
         
     }
     
-    func updateNews(){
+    func updating(){
         
         countLoadNews.value = 0
         
@@ -74,9 +74,10 @@ class MainViewModel {
                         self?.coreDataService.createItem(title: $0.title, description: $0.description, pubDate: $0.pubData , imageUrl: $0.image, source: $0.source, link: $0.link)
                         
                     }
+                
                 self?.countNews()
     
-                if self?.countLoadNews.value == 5 {
+                if self?.countLoadNews.value == URLResources.newsSource.rssItem.count {
                     self?.dataSource = self?.coreDataService.fetchAllItems() ?? []
                     self?.mapCellData()
                 }
@@ -84,6 +85,11 @@ class MainViewModel {
             }
         }
         
+    }
+    
+    func updateNews(){
+        let isConnect = NetworkConnection.isInternetAvailable()
+        isConnect ?  updating() : loading()
     }
     
     func deleteAllNews(){
@@ -100,7 +106,14 @@ class MainViewModel {
         cellDataSource.value = dataSource.compactMap({ MainCellViewModel($0) })
     }
     
-    //MARK: - User action
+    //MARK: - User action and alerts
+    
+    func noInternetConnection(){
+        let isConnect = NetworkConnection.isInternetAvailable()
+        if !isConnect {
+            appCordinator?.showInternetConnectionAlert()
+        }
+    }
     
     func userDidPressClearCashes(){
         appCordinator?.userDidPressClearCashes()

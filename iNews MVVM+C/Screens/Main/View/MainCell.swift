@@ -44,10 +44,13 @@ class MainCell: UITableViewCell {
         }
         
         title.font = .boldSystemFont(ofSize: 16)
-        title.numberOfLines = 3
+        title.numberOfLines = 2
+        title.textAlignment = .natural
         
         discription.font = .systemFont(ofSize: 14)
-        discription.numberOfLines = 2
+        discription.numberOfLines = 3
+        discription.textColor = .darkGray
+        
         
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 10
@@ -55,12 +58,11 @@ class MainCell: UITableViewCell {
         image.clipsToBounds = true
             
         
-        
         date.font = .systemFont(ofSize: 14)
         date.textColor = .gray
         
         source.font = .systemFont(ofSize: 14)
-        source.textColor = .lightGray
+        source.textColor = .systemGray
     }
 }
 //MARK: - Set Constraints
@@ -76,19 +78,15 @@ extension MainCell {
             discription.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 20),
             discription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            image.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: -15),
+            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
             image.heightAnchor.constraint(equalToConstant: 100),
             image.widthAnchor.constraint(equalToConstant: 100),
             
-            
-            date.topAnchor.constraint(equalTo: discription.bottomAnchor, constant: 10),
-            date.topAnchor.constraint(equalTo: discription.bottomAnchor, constant: 10),
             date.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             date.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            
-            source.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 20),
+          
             source.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             source.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
         ])

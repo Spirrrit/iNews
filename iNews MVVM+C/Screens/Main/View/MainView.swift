@@ -22,8 +22,12 @@ class MainView: UIViewController {
         startTimer()
         setupTableView()
         setupView()
-        viewModel?.loadNews()
+        viewModel?.loading()
         bindViewModel()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel?.noInternetConnection()
     }
 
     //MARK: - Timer
@@ -73,13 +77,16 @@ class MainView: UIViewController {
         title = "Главная"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(remove))
+        navigationController?.navigationBar.tintColor = .darkGray
+        navigationController?.navigationBar.backgroundColor = .systemBackground
+        
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Загрузка...")
         
         view.addSubview(tableView)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .systemBackground
         
         NSLayoutConstraint.activate([
             
@@ -93,20 +100,18 @@ class MainView: UIViewController {
     //MARK: - @Objc funcs
     
     @objc func remove(){
-        
         viewModel?.userDidPressClearCashes()
     }
     
     @objc func refresh(){
         
-        self.tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2){
             self.refreshControl.endRefreshing()
+            self.reloadTableViewBasic()
         }
     }
     
     @objc func updateNews(){
-        
         viewModel?.updateNews()
         print("Обновлено с таймером")
         
