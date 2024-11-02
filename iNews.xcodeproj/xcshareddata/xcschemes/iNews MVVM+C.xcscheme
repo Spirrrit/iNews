@@ -71,9 +71,18 @@
             BlueprintIdentifier = "9EA6A7632C4CE98B00041BF7"
             BuildableName = "iNews MVVM+C.app"
             BlueprintName = "iNews MVVM+C"
-            ReferencedContainer = "container:iNews MVVM+C.xcodeproj">
+            ReferencedContainer = "container:iNews.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "9EA6A7632C4CE98B00041BF7"
+            BuildableName = "iNews MVVM+C.app"
+            BlueprintName = "iNews MVVM+C"
+            ReferencedContainer = "container:iNews MVVM+C.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -91,6 +100,15 @@
             ReferencedContainer = "container:iNews MVVM+C.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "9EA6A7632C4CE98B00041BF7"
+            BuildableName = "iNews MVVM+C.app"
+            BlueprintName = "iNews MVVM+C"
+            ReferencedContainer = "container:iNews MVVM+C.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

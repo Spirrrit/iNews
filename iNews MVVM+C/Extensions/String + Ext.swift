@@ -10,23 +10,10 @@ import UIKit
 
 extension String {
     
-    func getImage() -> UIImage? {
-        var currentImage: UIImage?
-        guard let url = URL(string: self) else { return UIImage(named: "") }
-        URLSession.shared.dataTask(with: url, completionHandler: { (data, _, error) -> Void in
-            guard let data = data , error == nil, let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async { () -> Void in
-                currentImage = image
-            }
-        }).resume()
-        return currentImage
-    }
-    
-    
     func getDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E, d MM yyyy HH:mm:ss Z"
-        return dateFormatter.date(from: self)
+        let dateFormatter = CustomDateFormator()
+        dateFormatter.dateFormatter.dateFormat = "E, d MM yyyy HH:mm:ss Z"
+        return dateFormatter.dateFormatter.date(from: self)
     }
     
     func deleteHtmlSymbol() -> String {

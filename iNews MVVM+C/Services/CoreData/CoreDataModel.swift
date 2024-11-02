@@ -25,7 +25,7 @@ extension NewCoreData {
     @NSManaged public var rssTitle: String?
     @NSManaged public var rssDescription: String?
     @NSManaged public var rssPubDate: Date?
-    @NSManaged public var rssImage: Data?
+    @NSManaged public var rssImage: String?
     @NSManaged public var rssSource: String?
     @NSManaged public var rssLink: String?
 

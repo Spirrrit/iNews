@@ -10,7 +10,7 @@ import UIKit
 
 class MainCell: UITableViewCell {
     
-    static var identifier = "MainCell"
+    static let identifier = "MainCell"
     
     let title = UILabel()
     let discription = UILabel()
@@ -24,16 +24,9 @@ class MainCell: UITableViewCell {
         setConstraints()
     }
     
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupCell(viewModel: MainCellViewModel){
-        title.text = viewModel.title
-        discription.text = viewModel.description
-        image.image = viewModel.image ?? UIImage(named: "emptyPhoto")
-        date.text = viewModel.pubData.toRusString
-        source.text = viewModel.source
     }
     
     //MARK: - Setup View
@@ -80,9 +73,9 @@ extension MainCell {
             
             image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
-            image.heightAnchor.constraint(equalToConstant: 100),
-            image.widthAnchor.constraint(equalToConstant: 100),
+//            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
+            image.heightAnchor.constraint(equalToConstant: 80),
+            image.widthAnchor.constraint(equalToConstant: 80),
             
             date.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             date.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),

@@ -12,31 +12,28 @@ class MainView: UIViewController {
     var viewModel: MainViewModel?
     var tableView = UITableView()
     let activityIndicator = UIActivityIndicatorView()
-    var cellDataSource = [MainCellViewModel]()
+    var cellDataSource = [MainCellModel]()
     var refreshControl: UIRefreshControl = UIRefreshControl()
-    var timer: Timer?
+    var imageDataSource = [ImageRecord]()
+    let pendingOperations = PendingOperations()
+    lazy var cacheDataSource: NSCache<AnyObject, UIImage> = {
+        let cache = NSCache<AnyObject, UIImage>()
+        return cache
+    }()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        startTimer()
         setupTableView()
         setupView()
         viewModel?.loading()
         bindViewModel()
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel?.noInternetConnection()
     }
-
-    //MARK: - Timer
-    
-    //Timer that asks for updates on the network every 30 seconds
-    func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(updateNews), userInfo: nil, repeats: true)
-    }
-
     
     //MARK: - Binding
     
@@ -50,24 +47,17 @@ class MainView: UIViewController {
             }
         }
         
+        // следим за появлением новых новостей в modelview
         viewModel?.cellDataSource.bind { [weak self] news in
             guard let self, let news else { return }
             
-            // Если появились новые элементы и лоадер не крутится, то обновляем таблицу
-            if cellDataSource.count < news.count && viewModel?.isLoading.value == false {
-                print("Новый элемент")
-                reloadTableViewBasic()
-            }
-           
             self.cellDataSource = news
             self.cellDataSource.sort(by: { $0.pubData > $1.pubData  })
+            reloadTableViewBasic()
             
-            // обновляем таблицу пока лоаддер активен
-            if viewModel?.isLoading.value == true {
-                reloadTableViewBasic()
-            }
         }
     }
+    
     
     //MARK: - Setup View
     
@@ -104,17 +94,7 @@ class MainView: UIViewController {
     }
     
     @objc func refresh(){
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-            self.refreshControl.endRefreshing()
-            self.reloadTableViewBasic()
-        }
-    }
-    
-    @objc func updateNews(){
-        viewModel?.updateNews()
-        print("Обновлено с таймером")
-        
+        viewModel?.loading()
     }
 }
 

@@ -15,10 +15,10 @@ final class DetailsView: UIViewController {
     var detailViewModel: DetailsViewModel?
     var dataSource: DetailsModel?
     
-    private var titleNews = UILabel()
-    private var discriptionNews = UILabel()
-    private var dateNews = UILabel()
-    private var imageNews = UIImageView()
+    private lazy var titleNews = UILabel()
+    private lazy var discriptionNews = UILabel()
+    private lazy var dateNews = UILabel()
+    private lazy var imageNews = UIImageView()
     private var browserButton = UIButton()
     private var storeUrlForBrowser: String?
     private var scrollView = UIScrollView()
@@ -32,6 +32,7 @@ final class DetailsView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
 //MARK: - Lificycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,12 @@ final class DetailsView: UIViewController {
         titleNews.text = dataSource?.title
         discriptionNews.text = dataSource?.description
         dateNews.text = dataSource?.pubData.toRusString
-        imageNews.image = dataSource?.image
+        imageNews.image = dataSource?.image.image
+//        detailViewModel?.downloadImage(url: dataSource?.image ?? "", completion: { image in
+//                DispatchQueue.main.async {
+//                    self.imageNews.image = image
+//                } 
+//        })
         storeUrlForBrowser = dataSource?.link
     }
     
@@ -77,7 +83,7 @@ final class DetailsView: UIViewController {
         discriptionNews.font = UIFont.systemFont(ofSize: 20)
         discriptionNews.numberOfLines = 0
         discriptionNews.text  = ""
-        discriptionNews.textColor = .darkGray
+        discriptionNews.textColor = .black
         
         dateNews.font = UIFont.systemFont(ofSize: 20)
         dateNews.textColor = .lightGray
@@ -91,11 +97,11 @@ final class DetailsView: UIViewController {
         
         browserButton.addTarget(self, action: #selector(browserButtonTap), for: .touchUpInside)
         browserButton.setTitle("Перейти в браузер ", for: .normal)
-        browserButton.setTitleColor(.darkGray, for: .normal)
+        browserButton.setTitleColor(.black, for: .normal)
         browserButton.backgroundColor = .systemBackground
         browserButton.layer.cornerRadius = 12
         browserButton.layer.borderWidth = 1.5
-        browserButton.layer.borderColor = UIColor.darkGray.cgColor
+        browserButton.layer.borderColor = UIColor.black.cgColor
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
@@ -140,11 +146,12 @@ extension DetailsView {
             browserButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
-        if dataSource?.image == UIImage(named: "emptyPhoto") {
+        if dataSource?.image.image == UIImage(named: "emptyPhoto") {
             imageNews.heightAnchor.constraint(equalToConstant: 0).isActive = true
         } else {
             imageNews.heightAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         }
+
         
     }
 }

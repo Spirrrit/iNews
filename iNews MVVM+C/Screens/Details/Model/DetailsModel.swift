@@ -10,14 +10,14 @@ import UIKit
 
 class DetailsModel {
     
-    var title: String
-    var description: String
-    var pubData: Date
-    var image: UIImage?
-    var source: String
-    var link: String
+    let title: String
+    let description: String
+    let pubData: Date
+    let image: ImageRecord
+    let source: String
+    let link: String
     
-    init(news: MainCellViewModel) {
+    init(news: MainCellModel) {
         self.title = news.title
         self.description = news.description
         self.pubData = news.pubData

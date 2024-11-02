@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 struct New {
-    var title: String
-    var description: String
-    var pubData: Date
-    var image: String
-    var source: String
-    var link: String
+    let title: String
+    let description: String
+    let pubData: Date
+    let image: String
+    let source: String
+    let link: String
 }

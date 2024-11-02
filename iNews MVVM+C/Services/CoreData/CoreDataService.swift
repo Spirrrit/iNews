@@ -40,11 +40,7 @@ class CoreDataService {
                 newItem.rssPubDate = pubDate
                 newItem.rssSource = source
                 newItem.rssLink = link
-                
-//                 Download image
-                if let imageData = downloadImage(from: imageUrl) {
-                    newItem.rssImage = imageData
-                }
+                newItem.rssImage = imageUrl
 
                  try context.save()
 //                print("Item saved successfully!")

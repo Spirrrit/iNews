@@ -9,9 +9,9 @@ import Foundation
 
 //Сервис по работе с сетью и базой данных
 
-struct Services : NetworkServicesProtocol, CoreDataServiceProtocol {
-    var networkService: NetworkService
-    var coreDataService: CoreDataService
+struct Services {
+    var networkService = NetworkService()
+    var coreDataService = CoreDataService()
 }
 
 

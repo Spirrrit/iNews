@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A335" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="NewCoreData" representedClassName="NewCoreData" syncable="YES">
         <attribute name="rssDescription" optional="YES" attributeType="String"/>
-        <attribute name="rssImage" optional="YES" attributeType="Binary"/>
+        <attribute name="rssImage" optional="YES" attributeType="String"/>
         <attribute name="rssLink" optional="YES" attributeType="String"/>
         <attribute name="rssPubDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="rssSource" optional="YES" attributeType="String"/>
